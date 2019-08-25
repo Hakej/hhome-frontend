@@ -1,1 +1,82 @@
-<router-outlet></router-outlet>
+<div [class.example-is-mobile]="mobileQuery.matches" class="app-body">
+  <mat-toolbar class="example-toolbar" color="primary">
+    <button (click)="snav.toggle()" mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <img src="../favicon.ico"/>
+    <h1 class="app-name">Planning Poker</h1>
+  </mat-toolbar>
+
+  <mat-sidenav-container [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
+                         class="sidenav-container">
+    <mat-sidenav #snav [fixedInViewport]="mobileQuery.matches"
+                 [mode]="mobileQuery.matches ? 'over' : 'side'" fixedTopGap="56">
+      <mat-nav-list>
+        <div class="add-div">
+          <mat-form-field appearance="outline">
+            <mat-label>Add name</mat-label>
+            <input [(ngModel)]="nameToAdd" matInput placeholder="Name">
+          </mat-form-field>
+          <a (click)="addPokerCard()" mat-list-item>
+            Add Card
+
+          </a>
+        </div>
+        <a (click)="deleteAllCards()" mat-list-item>
+          Delete All Cards
+        </a>
+        <a (click)="expandAllcards()" mat-list-item>
+          Expand Cards
+        </a>
+        <mat-button-toggle (change)="changeAutoUpdate()"
+                           [checked]="isAutoUpdateOn"
+                           [style.background-color]="isAutoUpdateOn ? 'green' : 'red'"
+                           style="transition: 0.2s">
+          Auto-update
+        </mat-button-toggle>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <mat-accordion multi="true">
+        <div *ngIf="mobileQuery.matches;
+               else elseBlock"
+             class="site-content-phone">
+          <div *ngFor="let pokerCard of pokerCards"
+               [style.width]="'100%'"
+               class="poker-card">
+            <mat-expansion-panel [expanded]="areAllCardsExpanded">
+              <mat-expansion-panel-header class="poker-card-name">
+                <h3>{{ pokerCard.name }}</h3>
+              </mat-expansion-panel-header>
+              <input [(ngModel)]="pokerCard.value"
+                     [value]="pokerCard.value" type="number">
+              <div class="poker-card-value">
+                {{ pokerCard.value }}
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </div>
+        <ng-template #elseBlock>
+          <div class="site-content">
+            <div *ngFor="let pokerCard of pokerCards"
+                 [style.width]="(100 / this.pokerCards.length) + '%'"
+                 class="poker-card">
+              <mat-expansion-panel [expanded]="areAllCardsExpanded">
+                <mat-expansion-panel-header class="poker-card-name">
+                  <h3>{{ pokerCard.name }}</h3>
+                </mat-expansion-panel-header>
+                <input [(ngModel)]="pokerCard.value"
+                       [value]="pokerCard.value" type="number">
+                <div class="poker-card-value">
+                  {{ pokerCard.value }}
+                </div>
+              </mat-expansion-panel>
+            </div>
+          </div>
+        </ng-template>
+      </mat-accordion>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
