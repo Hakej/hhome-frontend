@@ -18,14 +18,10 @@ import {
   MatToolbarModule
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
-import { DialogComponent } from './components/dialog/dialog.component';
-import { DialogOverviewExampleDialogComponent } from './components/dialog/dialog-overview-example-dialog/dialog-overview-example-dialog.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DialogComponent,
-    DialogOverviewExampleDialogComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
