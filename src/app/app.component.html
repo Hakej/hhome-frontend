@@ -49,8 +49,11 @@
               <mat-expansion-panel-header class="poker-card-name">
                 <h3>{{ pokerCard.name }}</h3>
               </mat-expansion-panel-header>
-              <input [(ngModel)]="pokerCard.value"
-                     [value]="pokerCard.value" type="number">
+              <input type="number"
+                     min="0"
+                     step="10"
+                     [value]="pokerCard.value"
+                     (change)="updatePokerCard(pokerCard)">
               <div class="poker-card-value">
                 {{ pokerCard.value }}
               </div>
